@@ -1,7 +1,7 @@
 {
-  "short_name": "SEMIS-Enrollment",
-  "name": "SEMIS-Enrollment",
-  "description": "SEMIS-Enrollment",
+  "short_name": "SEMIS - Student Transfer Execute",
+  "name": "SEMIS - Student Transfer Execute",
+  "description": "SEMIS - Student Transfer Execute",
   "icons": [
     {
       "src":"dhis2-app-icon.png",
