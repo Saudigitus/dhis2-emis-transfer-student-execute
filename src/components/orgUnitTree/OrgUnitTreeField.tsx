@@ -4,8 +4,6 @@ import React, { useState } from 'react'
 import useShowAlerts from '../../hooks/commons/useShowAlert';
 import { IconButton } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import { useRecoilState } from 'recoil';
-import { SelectedOuState } from '../../schema/selectedOu';
 import { useField, type FieldRenderProps } from "react-final-form";
 
 interface OuProps {
@@ -22,7 +20,7 @@ const ORG_UNIT_QUERY = {
 
 export default function OrgUnitTreeField(props: OuProps): React.ReactElement {
     const { hide, show } = useShowAlerts()
-    const [selectedOu, setSelectedOu] = useRecoilState(SelectedOuState)
+    const [selectedOu, setSelectedOu] = useState<{ id: string, displayName: string, selected: any }>()
     const { loading, data, error } = useDataQuery<{ results: { teiSearchOrganisationUnits: [{ id: string, displayName: string }] } }>(ORG_UNIT_QUERY, {
         onError(error) {
             show({

@@ -12,7 +12,6 @@ import { onSubmitClicked } from "../../schema/formOnSubmitClicked";
 import { usePostEvent } from "../../hooks/events/useCreateEvents";
 import { DataStoreState } from "../../schema/dataStoreSchema";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
-import { SelectedOuState } from "../../schema/selectedOu";
 interface ContentProps {
   setOpen: (value: boolean) => void
 }
@@ -27,7 +26,6 @@ function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
   const [fieldsWitValue, setFieldsWitValues] = useState<any[]>([enrollmentsData])
   const [clickedButton, setClickedButton] = useState<string>("");
   const [selected] = useRecoilState(RowSelectionState);
-  const [selectedOu] = useRecoilState(SelectedOuState);
   const { loadUpdateEvent, updateEvent, data } = usePostEvent();
   const transferDataStore = useRecoilValue(DataStoreState)?.transfer
   const [initialValues] = useState<object>({
@@ -46,14 +44,14 @@ function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
   }, [data])
 
   useEffect(() => { setClicked(false) }, [])
-  
-const organizeDataValues = (data: any) => {
-    const response = [{ "dataElement": transferDataStore?.status, "value": "Pending" }]
-  Object.keys(data).forEach((x) => {
-      if (x !== "eventdatestaticform") {
-          response.push({ "dataElement": x, "value": data[x] })
-      }
-})
+
+  const organizeDataValues = (data: any) => {
+      const response = [{ "dataElement": transferDataStore?.status, "value": "Pending" }]
+    Object.keys(data).forEach((x) => {
+        if (x !== "eventdatestaticform") {
+            response.push({ "dataElement": x, "value": data[x] })
+        }
+  })
 return response;
 }
   function onSubmit() {
@@ -69,14 +67,14 @@ return response;
           occurredAt: "2023-08-23",
           orgUnit: event?.orgUnit,
           program: event?.program,
-          programStage: event?.programStage,
+          programStage: transferDataStore?.programStage,
           scheduledAt: "2023-08-23",
           status: "ACTIVE",
           trackedEntityInstance: event?.trackedEntity,
           dataValues: organizeDataValues(values)
           })
       }
-      /* void updateEvent({ data: { events } }) */
+      void updateEvent({ data: { events } })
     }
   }
 

@@ -1,4 +1,4 @@
-import { type SelectionSchemaConfig } from "../../schema/selectedOu";
+import { type SelectionSchemaConfig } from "../../schema/tableSelectedRowsSchema";
 
 export const checkIsRowSelected = (rawRowData: object, selected: SelectionSchemaConfig) => {
     const newArray = [...selected.selectedRows];
