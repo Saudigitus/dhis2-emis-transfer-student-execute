@@ -29,7 +29,6 @@ function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
   const { loadUpdateEvent, updateEvent, data } = usePostEvent();
   const transferDataStore = useRecoilValue(DataStoreState)?.transfer
   const [initialValues] = useState<object>({
-    BxOhjC4qCFD: orgUnit,
     eventdatestaticform: format(new Date(), "yyyy-MM-dd")
   })
 

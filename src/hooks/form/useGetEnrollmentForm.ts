@@ -11,10 +11,10 @@ export default function useGetEnrollmentForm() {
 
     const buildForm = () => {
         if (getDataStoreData != null && getProgram !== undefined) {
-            const { transfer: { programStage, destinySchool } } = getDataStoreData
+            const { transfer: { programStage, status } } = getDataStoreData
             const { programStages } = getProgram
             const transferProgramStage = programStages.filter(elemnt => elemnt.id === programStage)[0]
-            setEnrollmentsData([formatResponseEvents(transferProgramStage).filter(x => x.id === destinySchool || x.id === "Wq87Fqgd420")])
+            setEnrollmentsData([formatResponseEvents(transferProgramStage).filter(x => x.id !== status)])
         }
     }
     useEffect(() => {
