@@ -11,6 +11,7 @@ import { onSubmitClicked } from "../../schema/formOnSubmitClicked";
 import { usePostEvent } from "../../hooks/events/useCreateEvents";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
 import { getSelectedKey } from "../../utils/commons/dataStore/getSelectedKey";
+import { useParams } from "../../hooks/commons/useQueryParams";
 interface ContentProps {
   setOpen: (value: boolean) => void
 }
@@ -25,7 +26,12 @@ function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
   const [selected] = useRecoilState(RowSelectionState);
   const { loadUpdateEvent, updateEvent, data } = usePostEvent();
   const { getDataStoreData } = getSelectedKey();
+  const { urlParamiters } = useParams();
+  const orgUnit = urlParamiters()?.school
+
   const [initialValues] = useState<object>({
+    [getDataStoreData?.transfer?.originSchool]: orgUnit,
+    [getDataStoreData?.transfer?.status]: "Pending",
     eventdatestaticform: format(new Date(), "yyyy-MM-dd")
   })
 
@@ -42,7 +48,7 @@ function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
   useEffect(() => { setClicked(false) }, [])
 
   const organizeDataValues = (data: any) => {
-      const response = [{ dataElement: getDataStoreData?.transfer?.status, value: "Pending" }]
+      const response: any[] = []
     Object.keys(data).forEach((x) => {
         if (x !== "eventdatestaticform") {
             response.push({ dataElement: x, value: data[x] })
