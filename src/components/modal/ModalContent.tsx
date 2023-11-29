@@ -49,8 +49,8 @@ function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
 
   const organizeDataValues = (data: any) => {
       const response: any[] = []
-    Object.keys(data).forEach((x) => {
-        if (x !== "eventdatestaticform") {
+      Object.keys(data).forEach((x) => {
+        if (x !== "undefined" && x !== "eventdatestaticform") {
             response.push({ dataElement: x, value: data[x] })
         }
   })
