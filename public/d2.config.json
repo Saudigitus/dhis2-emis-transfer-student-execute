@@ -1,13 +1,13 @@
 {
   "type": "app",
-  "name": "SEMIS-Enrollment",
-  "description": "SEMIS-Enrollment",
+  "name": "SEMIS-Student-Transfer-Execute",
+  "description": "SEMIS-Student-Transfer-Execute",
   "version": "1.0.0",
   "author": {
     "name": "Hisp Mozambique (Saudigitus) & Hisp Uganda",
     "email": "info@saudigitus.org"
   },
-  "title": "SEMIS-Enrollment",
+  "title": "SEMIS-Student-Transfer-Execute",
   "entryPoints": {
     "app": "index.html"
   }

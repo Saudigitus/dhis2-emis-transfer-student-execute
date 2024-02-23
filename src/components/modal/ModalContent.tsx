@@ -1,49 +1,40 @@
 import React, { useState, useEffect, useRef } from "react";
-import { ModalActions, Button, ButtonStrip, CircularLoader, CenteredContent } from "@dhis2/ui";
+import { ModalActions, Button, ButtonStrip, CircularLoader, CenteredContent, NoticeBox } from "@dhis2/ui";
 import WithPadding from "../template/WithPadding";
 import { Form } from "react-final-form";
 import { formFields } from "../../utils/constants/enrollmentForm/enrollmentForm";
 import useGetEnrollmentForm from "../../hooks/form/useGetEnrollmentForm";
 import GroupForm from "../form/GroupForm";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { ProgramConfigState } from "../../schema/programSchema";
-import { useParams } from "../../hooks/commons/useQueryParams";
-import usePostTei from "../../hooks/tei/usePostTei";
+import { useRecoilState } from "recoil";
 import { format } from "date-fns";
-import { useGetPatternCode } from "../../hooks/tei/useGetPatternCode";
-import { useGetAttributes } from "../../hooks/programs/useGetAttributes";
-import { teiPostBody } from "../../utils/tei/formatPostBody";
 import { onSubmitClicked } from "../../schema/formOnSubmitClicked";
+import { usePostEvent } from "../../hooks/events/useCreateEvents";
+import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
+import { getSelectedKey } from "../../utils/commons/dataStore/getSelectedKey";
+import { useParams } from "../../hooks/commons/useQueryParams";
 interface ContentProps {
   setOpen: (value: boolean) => void
 }
 
 function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
-  const getProgram = useRecoilValue(ProgramConfigState);
-  const { useQuery } = useParams();
   const formRef: React.MutableRefObject<FormApi<IForm, Partial<IForm>>> = useRef(null);
-  const orgUnit = useQuery().get("school");
-  const orgUnitName = useQuery().get("schoolName");
   const { enrollmentsData } = useGetEnrollmentForm();
   const [, setClicked] = useRecoilState<boolean>(onSubmitClicked);
   const [values, setValues] = useState<object>({})
   const [fieldsWitValue, setFieldsWitValues] = useState<any[]>([enrollmentsData])
-  const { postTei, loading, data } = usePostTei()
   const [clickedButton, setClickedButton] = useState<string>("");
+  const [selected] = useRecoilState(RowSelectionState);
+  const { loadUpdateEvent, updateEvent, data } = usePostEvent();
+  const { getDataStoreData } = getSelectedKey();
+  const { urlParamiters } = useParams();
+  const orgUnit = urlParamiters()?.school
+
   const [initialValues] = useState<object>({
-    registerschoolstaticform: orgUnitName,
+    [getDataStoreData?.transfer?.originSchool]: orgUnit,
+    [getDataStoreData?.transfer?.status]: "Pending",
     eventdatestaticform: format(new Date(), "yyyy-MM-dd")
   })
-  const { attributes = [] } = useGetAttributes()
-  const { returnPattern, loadingCodes, generatedVariables } = useGetPatternCode()
 
-  useEffect(() => {
-    void returnPattern(attributes)
-  }, [data])
-
-  useEffect(() => { setClicked(false) }, [])
-
-  // When Save and continue button clicked and data posted, close the modal
   useEffect(() => {
     if (data !== undefined && data?.status === "OK") {
       if (clickedButton === "saveandcontinue") {
@@ -54,20 +45,45 @@ function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
     }
   }, [data])
 
+  useEffect(() => { setClicked(false) }, [])
+
+  const organizeDataValues = (data: any) => {
+      const response: any[] = []
+      Object.keys(data).forEach((x) => {
+        if (x !== "undefined" && x !== "eventdatestaticform") {
+            response.push({ dataElement: x, value: data[x] })
+        }
+  })
+return response;
+}
   function onSubmit() {
     const allFields = fieldsWitValue.flat()
-    if (allFields.filter((element: any) => (element?.value === undefined && element.required)).length === 0) {
-      void postTei({ data: teiPostBody(fieldsWitValue, (getProgram != null) ? getProgram.id : "", orgUnit ?? "", values?.eventdatestaticform ?? "") })
+      if (allFields.filter((element: any) => (element?.value === undefined && element.required)).length === 0) {
+      const events = []
+      for (const event of selected.selectedRows) {
+        events.push(
+          {
+            enrollment: event?.enrollment,
+          occurredAt: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"),
+          orgUnit: event?.orgUnit,
+          program: event?.program,
+          programStage: getDataStoreData?.transfer?.programStage,
+          scheduledAt: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"),
+          status: "ACTIVE",
+          trackedEntityInstance: event?.trackedEntity,
+          dataValues: organizeDataValues(values)
+          })
+      }
+      void updateEvent({ data: { events } })
     }
   }
 
   const modalActions = [
-    { id: "cancel", type: "button", label: "Cancel", disabled: loading, onClick: () => { setClickedButton("cancel"); setOpen(false) } },
-    { id: "saveandnew", type: "submit", label: "Save and add new", primary: true, disabled: loading, onClick: () => { setClickedButton("saveandnew"); setClicked(true) } },
-    { id: "saveandcontinue", type: "submit", label: "Save and close", primary: true, disabled: loading, onClick: () => { setClickedButton("saveandcontinue"); setClicked(true) } }
+    { id: "cancel", type: "button", label: "Cancel", disabled: loadUpdateEvent, onClick: () => { setClickedButton("cancel"); setOpen(false) } },
+    { id: "saveandcontinue", type: "submit", label: "Perform transfer", primary: true, disabled: loadUpdateEvent, onClick: () => { setClickedButton("saveandcontinue"); setClicked(true) } }
   ];
 
-  if (enrollmentsData.length < 1 || loadingCodes) {
+  if (enrollmentsData?.length < 1) {
     return (
       <CenteredContent>
         <CircularLoader />
@@ -78,7 +94,7 @@ function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
   function onChange(e: any): void {
     const sections = enrollmentsData;
     for (const [key, value] of Object.entries(e)) {
-      for (let i = 0; i < sections.length; i++) {
+      for (let i = 0; i < sections?.length; i++) {
         if (sections[i].find((element: any) => element.id === key) !== null && sections[i].find((element: any) => element.id === key) !== undefined) {
           // Sending onChanging form value to variables object
           sections[i].find((element: any) => element.id === key).value = value
@@ -87,12 +103,17 @@ function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
     }
     setFieldsWitValues(sections)
     setValues(e)
-  }
+}
 
   return (
     <WithPadding>
-      <Form initialValues={{ ...initialValues, ...generatedVariables }} onSubmit={onSubmit}>
-        {({ handleSubmit, values, pristine, form }) => {
+      <React.Fragment>
+        < NoticeBox title={`WARNING! ${selected.selectedRows.length} rows will be affected`} warning>
+        </NoticeBox>
+        <br />
+      </React.Fragment>
+      <Form initialValues={initialValues} onSubmit={onSubmit}>
+        {({ handleSubmit, values, form }) => {
           formRef.current = form;
           return <form
             onSubmit={handleSubmit}
@@ -111,13 +132,13 @@ function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
             }
             <br />
             <ModalActions>
-              <ButtonStrip end className="mr-4">
+              <ButtonStrip end>
                 {modalActions.map((action, i) => (
                   <Button
                     key={i}
                     {...action}
                   >
-                    {(loading && action.id === clickedButton) ? <CircularLoader small /> : action.label}
+                    {((Boolean(loadUpdateEvent)) && action.id === clickedButton) ? <CircularLoader small /> : action.label}
                   </Button>
                 ))}
               </ButtonStrip>
