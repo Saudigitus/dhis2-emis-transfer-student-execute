@@ -1,11 +1,11 @@
 import React from "react";
 import { Table } from "../../components";
 import { useParams } from "../../hooks/commons/useQueryParams";
-import InfoPage from "../../components/table/components/info/InfoPage";
+import InfoPage from "../../components/info/InfoPage";
 
 function TableComponent() {
   const { urlParamiters } = useParams()
-  const school = urlParamiters().school as unknown as string
+  const { school } = urlParamiters()
 
   return (
     <>

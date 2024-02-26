@@ -1,8 +1,8 @@
 import { useRecoilState } from 'recoil';
 import useShowAlerts from '../commons/useShowAlert';
 import { useDataMutation } from "@dhis2/app-runtime";
-import { teiRefetch } from '../tei/usePostTei';
 import { RowSelectionState } from '../../schema/tableSelectedRowsSchema';
+import { TeiRefetch } from '../../schema/refecthTeiSchema';
 
 const POST_EVENT: any = {
     resource: 'tracker',
@@ -13,9 +13,9 @@ const POST_EVENT: any = {
     }
 }
 
-export function usePostEvent() {
+export function useCreateEvent() {
     const { hide, show } = useShowAlerts()
-    const [refetch, setRefetch] = useRecoilState<boolean>(teiRefetch)
+    const [refetch, setRefetch] = useRecoilState(TeiRefetch)
     const [, setSelected] = useRecoilState(RowSelectionState);
 
     const [create, { loading, data }] = useDataMutation(POST_EVENT, {

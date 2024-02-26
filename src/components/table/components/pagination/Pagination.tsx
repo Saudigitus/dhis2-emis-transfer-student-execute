@@ -5,22 +5,7 @@ import Select from 'react-select';
 import defaultClasses from '../table.module.css';
 import { disableNextPage } from '../../../../utils/table/pagination/pagination';
 import { rowsPerPages } from '../../../../utils/constants/pagination/pagination';
-
-interface PaginationProps {
-    page: number
-    rowsPerPage: number
-    onPageChange: (page: number) => void
-    onRowsPerPageChange: (rowsPerPage: number) => void
-    loading: boolean
-    totalPerPage: number
-}
-
-interface IconButtonPaginationProps {
-    onPageChange: (page: number) => void
-    ariaLabel: string
-    disabled: boolean
-    Icon: React.ReactNode
-}
+import { IconButtonPaginationProps, PaginationProps } from '../../../../types/table/PaginationProps';
 
 function textPagination(text: string): React.ReactElement {
     return (
@@ -34,7 +19,7 @@ function IconButtonPagination(props: IconButtonPaginationProps): React.ReactElem
     return (
         <>
             <IconButton
-                style={{ paddingRight: 15 }}
+                className={defaultClasses.iconButton}
                 // corrigir este erro 👇
                 onClick={props.onPageChange}
                 disabled={props.disabled}
@@ -46,12 +31,11 @@ function IconButtonPagination(props: IconButtonPaginationProps): React.ReactElem
     )
 }
 
-function Pagination({ page, rowsPerPage, onPageChange, onRowsPerPageChange, loading, totalPerPage }: PaginationProps): React.ReactElement {
+function Pagination(props: PaginationProps): React.ReactElement {
+    const { page, rowsPerPage, onPageChange, onRowsPerPageChange, loading, totalPerPage } = props;
     return (
         <div
-            className={defaultClasses.pagination}
-            style={{ display: 'flex', justifyContent: 'space-between' }}
-        >
+            className={defaultClasses.pagination}>
             <div />
 
             <div className={defaultClasses.rootPagination}>
@@ -70,7 +54,7 @@ function Pagination({ page, rowsPerPage, onPageChange, onRowsPerPageChange, load
                 />
                 {textPagination(`Page ${page}`)}
 
-                <div style={{ marginRight: 10 }} />
+                <div className={defaultClasses.separator} />
 
                 <IconButtonPagination
                     Icon={<KeyboardArrowLeft />}

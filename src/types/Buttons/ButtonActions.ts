@@ -6,7 +6,6 @@ interface ButtonActionProps {
     disabled: boolean
     loading?: boolean
     onClick: () => void
-
 }
 
 export type { ButtonActionProps }

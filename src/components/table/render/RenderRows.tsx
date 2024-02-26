@@ -4,17 +4,12 @@ import classNames from 'classnames';
 import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
 import { RowCell, RowTable } from '../components';
 import { getDisplayName } from '../../../utils/table/rows/getDisplayNameByOption';
-import { type CustomAttributeProps } from '../../../types/table/AttributeColumns';
 import { useConfig } from '@dhis2/app-runtime';
 import { Checkbox } from "@dhis2/ui"
 import { useRecoilState } from 'recoil';
 import { checkIsRowSelected } from '../../../utils/commons/arrayUtils';
 import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
-
-interface RenderHeaderProps {
-    rowsData: any[]
-    headerData: CustomAttributeProps[]
-}
+import { RenderHeaderProps } from '../../../types/table/TableContentProps';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -45,7 +40,7 @@ function RenderRows({ headerData, rowsData }: RenderHeaderProps): React.ReactEle
     const { baseUrl } = useConfig()
     const [selected, setSelected] = useRecoilState(RowSelectionState);
 
-    const openTeiInCaptureApp = (event: object) => {
+    const openTeiInCaptureApp = (event: any) => {
         const { trackedEntity, enrollment, orgUnit, program } = event;
         console.log(event, "ds");
         window.open(`${baseUrl}/dhis-web-capture/index.html#/enrollment?enrollmentId=${enrollment}&orgUnitId=${orgUnit}&programId=${program}&teiId=${trackedEntity}`, '_blank')
@@ -54,7 +49,7 @@ function RenderRows({ headerData, rowsData }: RenderHeaderProps): React.ReactEle
         setSelected({ ...selected, selectedRows: checkIsRowSelected(rawRowData, selected), isAllRowsSelected: selected.rows.length === checkIsRowSelected(rawRowData, selected).length })
     }
 
-    if (rowsData.length === 0) {
+    if (rowsData?.length === 0) {
         return (
             <RowTable
                 className={classes.row}
@@ -72,7 +67,7 @@ function RenderRows({ headerData, rowsData }: RenderHeaderProps): React.ReactEle
     return (
         <React.Fragment>
             {
-                rowsData.map((row, index) => (
+                rowsData?.map((row, index) => (
                     <RowTable
                         key={index}
                         onClick={() => { openTeiInCaptureApp(selected.rows[index]); }}

@@ -4,17 +4,9 @@ import { Checkbox } from "@dhis2/ui"
 import classNames from 'classnames';
 import { makeStyles, createStyles, type Theme } from '@material-ui/core/styles';
 import HeaderCell from '../components/head/HeaderCell';
-import { type CustomAttributeProps } from '../../../types/table/AttributeColumns';
 import { useRecoilState } from 'recoil';
 import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
-
-interface renderHeaderProps {
-    rowsHeader: CustomAttributeProps[]
-    orderBy: string
-    order: "asc" | "desc"
-    // TODO resolve this bug.👇
-    createSortHandler: (property: string) => any
-}
+import { RenderHeaderProps } from '../../../types/table/TableContentProps';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -50,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-function RenderHeader(props: renderHeaderProps): React.ReactElement {
+function RenderHeader(props: RenderHeaderProps): React.ReactElement {
     const { rowsHeader } = props
     const classes = useStyles()
     const [selected, setSelected] = useRecoilState(RowSelectionState);
