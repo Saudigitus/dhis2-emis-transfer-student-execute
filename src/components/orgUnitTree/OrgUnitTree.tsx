@@ -6,7 +6,7 @@ import { atom, useRecoilState } from "recoil"
 import OrgUnitTreeComponent from './OrgUnitTreeComponent';
 import { OuQueryString } from '../../schema/headerSearchInputSchema';
 import { OrgUnitTreeComponentProps, OuResponseType, SelectedOuType } from '../../types/orgUnit/OrgUnitTreeProps';
-import { SearchOu } from '../../types/orgUnit/ouQueryParams';
+import { SearchOu } from '../../types/orgUnit/OuQueryParams';
 
 export default function OrgUnitTree(props: OrgUnitTreeComponentProps): React.ReactElement {
     const  { onToggle } = props;
