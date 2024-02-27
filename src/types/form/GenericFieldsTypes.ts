@@ -10,6 +10,7 @@ interface FormFieldsProps {
     disabled: boolean
     required: string | boolean
     type?: string
+    name?: string
     optionSet?: CustomAttributeProps["options"]
 }
 

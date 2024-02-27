@@ -6,8 +6,6 @@ import { dataStoreRecord } from "../../../types/dataStore/DataStoreConfig";
 
 export function formatResponse(data: ProgramConfig, dataStoreData: dataStoreRecord): CustomAttributeProps[] {
     const headerResponse = useMemo(() => {
-        // TODO: Remove this when the API is fixed and solve this bug 👇
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         const originalData = ((data?.programStages?.find(programStge => programStge.id === dataStoreData?.registration?.programStage)) ?? {} as ProgramConfig["programStages"][0])
 
         return data?.programTrackedEntityAttributes?.map((item) => {

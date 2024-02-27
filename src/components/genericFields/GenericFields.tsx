@@ -15,10 +15,7 @@ function GenericFields({ attribute, disabled, valueType }: GenericFieldsComponen
   switch (valueType) {
     case Attribute.valueType.BOOLEAN as unknown as CustomAttributeProps["valueType"]:
       return (
-        <RadioButton
-          {...attribute}
-          disabled={disabled}
-        />
+        <RadioButton {...attribute} disabled={disabled} />
       );
 
     case Attribute.valueType.PHONE_NUMBER as unknown as CustomAttributeProps["valueType"]:
@@ -41,11 +38,7 @@ function GenericFields({ attribute, disabled, valueType }: GenericFieldsComponen
 
     case Attribute.valueType.TRUE_ONLY as unknown as CustomAttributeProps["valueType"]:
       return (
-        <CheckInput
-          {...attribute}
-          disabled={disabled}
-         
-        />
+        <CheckInput {...attribute} disabled={disabled} />
       );
 
     case Attribute.valueType.LIST as unknown as CustomAttributeProps["valueType"]:
@@ -55,7 +48,7 @@ function GenericFields({ attribute, disabled, valueType }: GenericFieldsComponen
         return <OrgUnitTreeField {...attribute} />;
 
     default:
-      return <span>ValueType not mapped</span>;
+      return <span>Value type not mapped</span>;
   }
 }
 

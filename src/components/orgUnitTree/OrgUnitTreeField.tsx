@@ -6,7 +6,7 @@ import { IconButton } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { useField, type FieldRenderProps } from "react-final-form";
 import style from "./OrgUnit.module.css"
-import { OuFieldProps, OuTeiSearchResponseType, SelectedOuFieldType } from '../../types/orgUnit/OrgUnitTreeProps';
+import { OuFieldProps, OuTeiSearchResponseType, SelectedOuType } from '../../types/orgUnit/OrgUnitTreeProps';
 
 const ORG_UNIT_QUERY = {
     results: {
@@ -19,7 +19,7 @@ const ORG_UNIT_QUERY = {
 
 export default function OrgUnitTreeField(props: OuFieldProps): React.ReactElement {
     const { hide, show } = useShowAlerts()
-    const [selectedOu, setSelectedOu] = useState<SelectedOuFieldType>()
+    const [selectedOu, setSelectedOu] = useState<SelectedOuType>()
     const { loading, data, error } = useDataQuery<{ results: OuTeiSearchResponseType }>(ORG_UNIT_QUERY, {
         onError(error) {
             show({
@@ -31,7 +31,7 @@ export default function OrgUnitTreeField(props: OuFieldProps): React.ReactElemen
     })
     const { input }: FieldRenderProps<any, HTMLElement> = useField(props.name);
 
-    const onOuChange = (event: SelectedOuFieldType) => {
+    const onOuChange = (event: SelectedOuType) => {
         setSelectedOu(event)
         input.onChange(event.id)
     }
@@ -60,7 +60,7 @@ export default function OrgUnitTreeField(props: OuFieldProps): React.ReactElemen
                             </span>
                             <IconButton
                                 size="small"
-                                onClick={() => { setSelectedOu({} as unknown as SelectedOuFieldType); }}
+                                onClick={() => { setSelectedOu({} as unknown as SelectedOuType); }}
                                 style={{ marginLeft: "auto" }}
                             >
                                 <Close fontSize="small" />

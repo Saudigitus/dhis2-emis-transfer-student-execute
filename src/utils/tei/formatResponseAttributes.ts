@@ -1,5 +1,5 @@
 import { Attribute } from "../../types/generated/models";
-import { type ProgramConfig } from "../../types/programConfig/ProgramConfig"
+import { ProgramConfig } from "../../types/programConfig/ProgramConfig"
 import { CustomAttributeProps, VariablesTypes } from "../../types/variables/AttributeColumns";
 
 export function formatResponseTEI(attributes: ProgramConfig) {

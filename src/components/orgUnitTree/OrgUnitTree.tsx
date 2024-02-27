@@ -3,7 +3,7 @@ import { OrganisationUnitTree, CenteredContent, CircularLoader, Help } from "@dh
 import React, { useState } from 'react'
 import { useParams } from '../../hooks/commons/useQueryParams';
 import useShowAlerts from '../../hooks/commons/useShowAlert';
-import { OrgUnitTreeComponentProps } from '../../types/orgUnit/OrgUnitTreeProps';
+import { OrgUnitTreeComponentProps, OuResponseType, SelectedOuType } from '../../types/orgUnit/OrgUnitTreeProps';
 
 const ORG_UNIT_QUERY = {
     results: {
@@ -17,9 +17,9 @@ const ORG_UNIT_QUERY = {
 export default function OrgUnitTree(props: OrgUnitTreeComponentProps): React.ReactElement {
     const  { onToggle } = props;
     const { hide, show } = useShowAlerts()
-    const [selectedOu, setSelectedOu] = useState<{ id: string, displayName: string, selected: any }>()
+    const [selectedOu, setSelectedOu] = useState<SelectedOuType>()
     const { add } = useParams();
-    const { loading, data, error } = useDataQuery<{ results: { organisationUnits: [{ id: string, displayName: string }] } }>(ORG_UNIT_QUERY, {
+    const { loading, data, error } = useDataQuery<{ results: OuResponseType }>(ORG_UNIT_QUERY, {
         onError(error) {
             show({
                 message: `${("Could not get data")}: ${error.message}`,
@@ -29,7 +29,7 @@ export default function OrgUnitTree(props: OrgUnitTreeComponentProps): React.Rea
         }
     })
 
-    const onOuChange = (event: { id: string, displayName: string, selected: any }) => {
+    const onOuChange = (event: SelectedOuType) => {
         add("school", event?.id);
         add("schoolName", event?.displayName);
         setSelectedOu(event);

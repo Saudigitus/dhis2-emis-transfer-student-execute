@@ -14,7 +14,7 @@ function sideBarData(): SideBarItemProps[] {
                 {
                     icon: listAdd,
                     label: "Enrollment",
-                    showBadge: false,
+                    showBadge: true,
                     disabled: false,
                     appName: "SEMIS-Enrollment",
                     route: "enrollment?sectionType=student&academicYear=2023",
@@ -23,7 +23,7 @@ function sideBarData(): SideBarItemProps[] {
                 {
                     icon: glyph,
                     label: "Attendance",
-                    showBadge: false,
+                    showBadge: true,
                     disabled: false,
                     appName: "SEMIS-Attendance",
                     route: "attendance?sectionType=student&academicYear=2023",
@@ -32,7 +32,7 @@ function sideBarData(): SideBarItemProps[] {
                 {
                     icon: fileDocument,
                     label: "Performance",
-                    showBadge: false,
+                    showBadge: true,
                     disabled: false,
                     appName: "SEMIS-Performance",
                     route: "performance?sectionType=student&academicYear=2023",
@@ -41,7 +41,7 @@ function sideBarData(): SideBarItemProps[] {
                 {
                     icon: gauge,
                     label: "Final result",
-                    showBadge: false,
+                    showBadge: true,
                     disabled: false,
                     appName: "SEMIS-Final-Result",
                     route: "final-result?sectionType=student&academicYear=2023",
@@ -50,7 +50,7 @@ function sideBarData(): SideBarItemProps[] {
                 {
                     icon: logOut,
                     label: "Transfer",
-                    showBadge: false,
+                    showBadge: true,
                     disabled: false,
                     appName: "SEMIS-Student-Transfer",
                     route: "student-transfer?sectionType=student",
@@ -64,7 +64,7 @@ function sideBarData(): SideBarItemProps[] {
                 {
                     icon: userGroup,
                     label: "Staff registry",
-                    showBadge: false,
+                    showBadge: true,
                     disabled: false,
                     appName: "SEMIS-Enrollment-Staff",
                     route: "enrollment-teacher?sectionType=staff&academicYear=2023",
@@ -73,7 +73,7 @@ function sideBarData(): SideBarItemProps[] {
                 {
                     icon: glyph,
                     label: "Attendance",
-                    showBadge: false,
+                    showBadge: true,
                     disabled: false,
                     appName: "SEMIS-Attendance-Staff",
                     route: "staff-attendance?sectionType=staff&academicYear=2023",
@@ -82,7 +82,7 @@ function sideBarData(): SideBarItemProps[] {
                 {
                     icon: logOut,
                     label: "Transfer",
-                    showBadge: false,
+                    showBadge: true,
                     disabled: false,
                     appName: "SEMIS-Staff-Transfer",
                     route: "staff-transfer?sectionType=staff",

@@ -4,26 +4,6 @@ import { FormSectionProps } from "../../../types/form/FormSectionProps";
 
 const staticForm = () => {
   return {
-/*     registeringSchool: {
-      required: true,
-      name: "registerschoolstaticform",
-      labelName: "Registering School",
-      valueType: "TEXT",
-      options: undefined,
-      disabled: true,
-      pattern: "",
-      visible: true,
-      description: "Registering School",
-      searchable: false,
-      error: false,
-      programStage: "",
-      content: "",
-      id: "registerschoolstaticform",
-      displayName: "Registering School",
-      header: "Registering School",
-      type: VariablesTypes.DataElement,
-      value: undefined
-    }, */
     enrollmentDate: {
       required: true,
       name: "eventdatestaticform",

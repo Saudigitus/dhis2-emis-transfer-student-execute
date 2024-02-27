@@ -1,6 +1,7 @@
 :root {
     --primary-color: #F9F9FA;
-    --secondary-colort: #FFFF;
+    --secondary-colort-white: #FFFF;
+    --black-color: #000;
 }
 
 /* FONT COLOR */

@@ -7,7 +7,7 @@ import { getDisplayName } from '../../../utils/table/rows/getDisplayNameByOption
 import { useConfig } from '@dhis2/app-runtime';
 import { Checkbox } from "@dhis2/ui"
 import { useRecoilState } from 'recoil';
-import { checkIsRowSelected } from '../../../utils/commons/arrayUtils';
+import { checkIsRowSelected } from '../../../utils/commons/checkIsRowSelected';
 import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
 import { RenderHeaderProps } from '../../../types/table/TableContentProps';
 

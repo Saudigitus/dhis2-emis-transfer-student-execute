@@ -6,7 +6,7 @@ interface OuFieldProps {
     name: string
 }
 
-interface SelectedOuFieldType {
+interface SelectedOuType {
     id: string
     displayName: string
     selected: any
@@ -19,4 +19,11 @@ interface OuTeiSearchResponseType {
     }[]
 }
 
-export type { OrgUnitTreeComponentProps, OuFieldProps, SelectedOuFieldType, OuTeiSearchResponseType }
+interface OuResponseType {
+    organisationUnits: {
+        id: string
+        displayName: string
+    }[]
+}
+
+export type { OrgUnitTreeComponentProps, OuFieldProps, SelectedOuType, OuTeiSearchResponseType, OuResponseType }
