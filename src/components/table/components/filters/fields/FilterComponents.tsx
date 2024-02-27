@@ -41,7 +41,7 @@ function FilterComponents(props: FilterComponentProps) {
                 {...column}
             />
         default:
-            return <div>not mapped</div>
+            return <div>Value type not mapped</div>
     }
 }
 

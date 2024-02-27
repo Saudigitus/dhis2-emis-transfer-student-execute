@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import React from 'react'
-import defaultClasses from '../table.module.css';
+import styles from '../table.module.css';
 import { TableComponentProps } from '../../../../types/table/TableContentProps';
 
 function TableComponent(props: TableComponentProps): React.ReactElement {
     const { children, className, ...passOnProps } = props;
-    const classes = classNames(defaultClasses.table, className);
+    const classes = classNames(styles.table, className);
     return (
         <table
             className={classes}

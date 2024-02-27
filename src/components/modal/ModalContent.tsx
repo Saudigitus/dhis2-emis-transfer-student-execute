@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { ModalActions, Button, ButtonStrip, CircularLoader, CenteredContent, NoticeBox } from "@dhis2/ui";
 import WithPadding from "../template/WithPadding";
 import { Form } from "react-final-form";
-import { formFields } from "../../utils/constants/enrollmentForm/enrollmentForm";
+import { formFields } from "../../utils/constants/formattedForm/formattedForm";
 import useGetEnrollmentForm from "../../hooks/form/useGetEnrollmentForm";
 import GroupForm from "../form/GroupForm";
 import { useRecoilState } from "recoil";
@@ -13,6 +13,7 @@ import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
 import { getSelectedKey } from "../../utils/commons/dataStore/getSelectedKey";
 import { useParams } from "../../hooks/commons/useQueryParams";
 import { ModalContentProps } from "../../types/modal/ModalProps";
+import { organizeDataValues } from "../../utils/events/organizeDataValues";
 
 function ModalContentComponent({ setOpen }: ModalContentProps): React.ReactElement {
   const formRef: React.MutableRefObject<FormApi<IForm, Partial<IForm>>> = useRef(null);
@@ -45,15 +46,6 @@ function ModalContentComponent({ setOpen }: ModalContentProps): React.ReactEleme
 
   useEffect(() => { setClicked(false) }, [])
 
-  const organizeDataValues = (data: any) => {
-    const response: any[] = []
-    Object.keys(data).forEach((x) => {
-      if (x !== "undefined" && x !== "eventdatestaticform") {
-        response.push({ dataElement: x, value: data[x] })
-      }
-  })
-return response;
-}
   function onSubmit() {
     const allFields = fieldsWitValue.flat()
       if (allFields.filter((element: any) => (element?.value === undefined && element.required)).length === 0) {
@@ -111,7 +103,7 @@ return response;
         <br />
       </React.Fragment>
       <Form initialValues={initialValues} onSubmit={onSubmit}>
-        {({ handleSubmit, values, form }) => {
+        {({ handleSubmit, values, form, pristine }) => {
           formRef.current = form;
           return <form
             onSubmit={handleSubmit}
@@ -134,9 +126,11 @@ return response;
                 {modalActions.map((action, i) => (
                   <Button
                     key={i}
+                    loading={((Boolean(loadUpdateEvent)) && action.id === clickedButton)}
                     {...action}
+                    disabled={pristine || action.disabled}
                   >
-                    {((Boolean(loadUpdateEvent)) && action.id === clickedButton) ? <CircularLoader small /> : action.label}
+                    {action.label}
                   </Button>
                 ))}
               </ButtonStrip>

@@ -9,11 +9,9 @@ import { useGetInitialValues } from "./initialValues/useGetInitialValues";
 import { useGetOptionSets } from "./optionSets/useGetOptionSets";
 import { useGetProgramConfig } from "./programConfig/useGetprogramConfig";
 import { useGetAttributes } from "./programs/useGetAttributes";
-import useGetUsedPProgramStages from "./programStages/useGetUsedPProgramStages";
 import { useTableData } from "./tableData/useTableData";
 import { useHeader } from "./tableHeader/useHeader";
 import { useGetPatternCode } from "./tei/useGetPatternCode";
-import usePostTei from "./tei/usePostTei";
 
 export { useDataStore, useParams, useShowAlerts, useDataElementsParamMapping, useCreateEvent, useGetDataElements, useGetEnrollmentForm, useGetInitialValues, useGetOptionSets,
-useGetProgramConfig, useGetAttributes, useGetUsedPProgramStages, useTableData, useHeader, useGetPatternCode, usePostTei}
+useGetProgramConfig, useGetAttributes, useTableData, useHeader, useGetPatternCode}

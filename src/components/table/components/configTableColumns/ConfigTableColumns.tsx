@@ -10,7 +10,7 @@ import { ConfigTableColumnsProps } from '../../../../types/table/ConfigColumnsPr
 
 function ConfigTableColumns(props: ConfigTableColumnsProps) {
     const { headers, updateVariables } = props;
-    const [open, setopen] = useState(false)
+    const [open, setopen] = useState<boolean>(false)
     const [selected] = useRecoilState(RowSelectionState);
 
     const closeDialog = () => {

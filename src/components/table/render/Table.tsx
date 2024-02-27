@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Paper } from '@material-ui/core';
 import WithBorder from '../../template/WithBorder';
 import WithPadding from '../../template/WithPadding';
-import WorkingLits from '../components/filters/workingList/WorkingLits';
+import WorkingLists from '../components/filters/workingList/WorkingLists';
 import { useHeader } from '../../../hooks/tableHeader/useHeader';
 import { useTableData } from '../../../hooks/tableData/useTableData';
 import { useParams } from '../../../hooks/commons/useQueryParams';
@@ -27,8 +27,8 @@ function Table() {
     const { getData, loading, tableData } = useTableData()
     const { useQuery } = useParams()
     const headerFieldsState = useRecoilValue(HeaderFieldsState)
-    const [page, setpage] = useState(1)
-    const [pageSize, setpageSize] = useState(10)
+    const [page, setpage] = useState<number>(1)
+    const [pageSize, setpageSize] = useState<number>(10)
     const [refetch] = useRecoilState(TeiRefetch)
 
     useEffect(() => {
@@ -51,7 +51,7 @@ function Table() {
                     <CircularLoader />
                 </CenteredContent>
             }
-            <WorkingLits />
+            <WorkingLists />
             <WithBorder type='bottom' />
             <WithPadding >
                 <WithBorder type='all' >

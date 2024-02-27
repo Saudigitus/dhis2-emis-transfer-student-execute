@@ -31,7 +31,7 @@ const MAX_LENGTH_OF_VALUE = 10;
 function ActiveFilterButton(props: ActiveFilterButtonProps) {
     const { onChange, iconClass, title, arrowIconElement, buttonText, onClear, innerRef } = props
     const classes = useStyles()
-    const [isHovered, setisHovered] = useState(false)
+    const [isHovered, setisHovered] = useState<boolean>(false)
 
     const buttonClasses = classNames(classes.button, { [classes.hovered]: isHovered });
 

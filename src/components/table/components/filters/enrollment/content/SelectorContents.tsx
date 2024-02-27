@@ -29,12 +29,8 @@ function SelectorContents(props: SelectorContentsProps) {
                 options={colum.options}
                 {...props}
             />
-            <div
-                className={classes.buttonsContainer}
-            >
-                <div
-                    className={classes.buttonContainer}
-                >
+            <div className={classes.buttonsContainer}>
+                <div className={classes.buttonContainer}>
                     <Button
                         primary
                         onClick={onQuerySubmit}
@@ -43,9 +39,7 @@ function SelectorContents(props: SelectorContentsProps) {
                         {('Update')}
                     </Button>
                 </div>
-                <div
-                    className={classes.buttonContainer}
-                >
+                <div className={classes.buttonContainer} >
                     <Button
                         dataTest="list-view-filter-cancel-button"
                         secondary

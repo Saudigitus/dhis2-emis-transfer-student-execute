@@ -9,8 +9,8 @@ import { RowSelectionState } from '../../../../schema/tableSelectedRowsSchema';
 
 function EnrollmentActionsButtons() {
   const [open, setOpen] = useState<boolean>(false);
-  const { useQuery } = useParams();
-  const orgUnit = useQuery().get("school")
+  const { urlParamiters } = useParams();
+  const { school: orgUnit } = urlParamiters();
   const [selected] = useRecoilState(RowSelectionState);
 
   return (

@@ -8,7 +8,6 @@ import { getSelectedKey } from '../../utils/commons/dataStore/getSelectedKey';
 import { LayoutProps } from '../../types/layout/LayoutProps';
 
 export default function FullLayout(props: LayoutProps) {
-    useGetInitialValues()
     const { children } = props;
     const { isSetSectionType } = useGetInitialValues()
     const { getDataStoreData } = getSelectedKey()

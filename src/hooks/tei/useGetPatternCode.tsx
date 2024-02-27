@@ -15,7 +15,7 @@ const TEI_ATTRIBUTES: any = {
 
 export const useGetPatternCode = () => {
     const engine = useDataEngine()
-    const [loadingCodes, setloadingCodes] = useState(false)
+    const [loadingCodes, setloadingCodes] = useState<boolean>(false)
     const [value, setvalue] = useState<GeneratedCodeType>({})
 
     async function returnPattern(variables: CustomAttributeProps[]) {
@@ -24,7 +24,6 @@ export const useGetPatternCode = () => {
             const { pattern = "", name: id }: CustomAttributeProps = variable
             let code: PatternCodeQueryResults = { results: { value: "" } }
             if (pattern.length > 0) {
-                console.log(pattern, id);
                 code = await engine.query(TEI_ATTRIBUTES, { variables: { id } }) as unknown as PatternCodeQueryResults
                 setvalue({ [id]: code?.results?.value })
             }

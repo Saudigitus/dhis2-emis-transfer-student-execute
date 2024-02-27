@@ -1,7 +1,7 @@
 interface RowsSelectionType {
     isAllRowsSelected: boolean,
     selectedRows: any[]
-    rows: Record<string, string>[]
+    rows: any[]
 }
 
 export type { RowsSelectionType }
