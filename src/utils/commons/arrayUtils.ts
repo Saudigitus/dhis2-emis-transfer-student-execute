@@ -1,6 +1,6 @@
-import { type SelectionSchemaConfig } from "../../schema/tableSelectedRowsSchema";
+import { RowsSelectionType } from "../../types/rows/SelectedRowsTypes";
 
-export const checkIsRowSelected = (rawRowData: object, selected: SelectionSchemaConfig) => {
+export const checkIsRowSelected = (rawRowData: any, selected: RowsSelectionType) => {
     const newArray = [...selected.selectedRows];
     const existingIndex = newArray.findIndex(item => item.trackedEntity === rawRowData.trackedEntity);
 

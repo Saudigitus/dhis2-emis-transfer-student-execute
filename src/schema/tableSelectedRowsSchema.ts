@@ -1,15 +1,7 @@
 import { atom } from 'recoil';
-import { z } from 'zod';
+import { RowsSelectionType } from '../types/rows/SelectedRowsTypes';
 
-export const selectionSchema = z.object({
-    isAllRowsSelected: z.boolean(),
-    selectedRows: z.array(z.object({})),
-    rows: z.array(z.object({}))
-})
-
-export type SelectionSchemaConfig = z.infer<typeof selectionSchema>
-
-export const RowSelectionState = atom<SelectionSchemaConfig>({
+export const RowSelectionState = atom<RowsSelectionType>({
     key: "get-selection-rows",
     default: {
         isAllRowsSelected: false,

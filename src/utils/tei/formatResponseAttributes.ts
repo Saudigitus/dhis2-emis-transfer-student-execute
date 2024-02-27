@@ -1,6 +1,6 @@
 import { Attribute } from "../../types/generated/models";
 import { type ProgramConfig } from "../../types/programConfig/ProgramConfig"
-import { VariablesTypes, type CustomAttributeProps } from "../../types/table/AttributeColumns"
+import { CustomAttributeProps, VariablesTypes } from "../../types/variables/AttributeColumns";
 
 export function formatResponseTEI(attributes: ProgramConfig) {
     const headers: CustomAttributeProps[] = [];
@@ -23,7 +23,7 @@ export function formatResponseTEI(attributes: ProgramConfig) {
                 header: trackedEntityAttribute?.trackedEntityAttribute?.displayName,
                 type: VariablesTypes.Attribute,
                 programStage: "",
-                value: undefined
+                assignedValue: undefined
             });
         }
         return headers;

@@ -13,7 +13,7 @@ import { useTableData } from '../../../hooks/tableData/useTableData';
 import { useParams } from '../../../hooks/commons/useQueryParams';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { HeaderFieldsState } from '../../../schema/headersSchema';
-import { teiRefetch } from '../../../hooks/tei/usePostTei';
+import { TeiRefetch } from '../../../schema/refecthTeiSchema';
 
 const usetStyles = makeStyles({
     tableContainer: {
@@ -29,7 +29,7 @@ function Table() {
     const headerFieldsState = useRecoilValue(HeaderFieldsState)
     const [page, setpage] = useState(1)
     const [pageSize, setpageSize] = useState(10)
-    const [refetch] = useRecoilState(teiRefetch)
+    const [refetch] = useRecoilState(TeiRefetch)
 
     useEffect(() => {
         void getData(page, pageSize)

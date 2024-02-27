@@ -6,11 +6,7 @@ import DialogConfigColumns from './DialogConfigColumns';
 import { useRecoilState } from 'recoil';
 import styles from "./configTableColumns.module.css"
 import { RowSelectionState } from '../../../../schema/tableSelectedRowsSchema';
-
-interface ConfigTableColumnsProps {
-    headers: any[]
-    updateVariables: (list: any[]) => void
-}
+import { ConfigTableColumnsProps } from '../../../../types/table/ConfigColumnsProps';
 
 function ConfigTableColumns(props: ConfigTableColumnsProps) {
     const { headers, updateVariables } = props;
@@ -24,11 +20,6 @@ function ConfigTableColumns(props: ConfigTableColumnsProps) {
     const openDialog = () => {
         setopen(true)
     }
-
-    // const handleSaveColumns = (columns) => {
-    //     // this.props.onSave(columns);
-    //     closeDialog();
-    // }
 
     return (
         <div className={styles['config-table__columns']}>
@@ -51,7 +42,6 @@ function ConfigTableColumns(props: ConfigTableColumnsProps) {
             <DialogConfigColumns
                 open={open}
                 onClose={closeDialog}
-                // onSave={handleSaveColumns}
                 updateVariables={updateVariables}
                 headers={headers}
             />

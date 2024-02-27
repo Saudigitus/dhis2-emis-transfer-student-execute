@@ -1,6 +1,6 @@
 import { Attribute } from "../../types/generated/models";
-import { type ProgramStageConfig } from "../../types/programStageConfig/ProgramStageConfig";
-import { VariablesTypes, type CustomAttributeProps } from "../../types/table/AttributeColumns";
+import { ProgramStageConfig } from "../../types/programStageConfig/ProgramStageConfig";
+import { CustomAttributeProps, VariablesTypes } from "../../types/variables/AttributeColumns";
 
 export function formatResponseEvents(object: ProgramStageConfig) {
     const dataElements: CustomAttributeProps[] = [];
@@ -24,7 +24,7 @@ export function formatResponseEvents(object: ProgramStageConfig) {
                 displayName: programStageDataElement.dataElement?.displayName,
                 header: programStageDataElement.dataElement?.displayName,
                 type: VariablesTypes.DataElement,
-                value: undefined
+                assignedValue: undefined
             });
         }
     }

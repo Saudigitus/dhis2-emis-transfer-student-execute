@@ -8,15 +8,13 @@ import GroupForm from "../form/GroupForm";
 import { useRecoilState } from "recoil";
 import { format } from "date-fns";
 import { onSubmitClicked } from "../../schema/formOnSubmitClicked";
-import { usePostEvent } from "../../hooks/events/useCreateEvents";
+import { useCreateEvent } from "../../hooks/events/useCreateEvents";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
 import { getSelectedKey } from "../../utils/commons/dataStore/getSelectedKey";
 import { useParams } from "../../hooks/commons/useQueryParams";
-interface ContentProps {
-  setOpen: (value: boolean) => void
-}
+import { ModalContentProps } from "../../types/modal/ModalProps";
 
-function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
+function ModalContentComponent({ setOpen }: ModalContentProps): React.ReactElement {
   const formRef: React.MutableRefObject<FormApi<IForm, Partial<IForm>>> = useRef(null);
   const { enrollmentsData } = useGetEnrollmentForm();
   const [, setClicked] = useRecoilState<boolean>(onSubmitClicked);
@@ -24,10 +22,10 @@ function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
   const [fieldsWitValue, setFieldsWitValues] = useState<any[]>([enrollmentsData])
   const [clickedButton, setClickedButton] = useState<string>("");
   const [selected] = useRecoilState(RowSelectionState);
-  const { loadUpdateEvent, updateEvent, data } = usePostEvent();
+  const { loadUpdateEvent, updateEvent, data } = useCreateEvent();
   const { getDataStoreData } = getSelectedKey();
   const { urlParamiters } = useParams();
-  const orgUnit = urlParamiters()?.school
+  const { school: orgUnit } = urlParamiters()
 
   const [initialValues] = useState<object>({
     [getDataStoreData?.transfer?.originSchool]: orgUnit,
@@ -48,11 +46,11 @@ function ModalContentComponent({ setOpen }: ContentProps): React.ReactElement {
   useEffect(() => { setClicked(false) }, [])
 
   const organizeDataValues = (data: any) => {
-      const response: any[] = []
-      Object.keys(data).forEach((x) => {
-        if (x !== "undefined" && x !== "eventdatestaticform") {
-            response.push({ dataElement: x, value: data[x] })
-        }
+    const response: any[] = []
+    Object.keys(data).forEach((x) => {
+      if (x !== "undefined" && x !== "eventdatestaticform") {
+        response.push({ dataElement: x, value: data[x] })
+      }
   })
 return response;
 }
