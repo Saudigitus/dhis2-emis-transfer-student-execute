@@ -10,6 +10,7 @@ interface SelectedOuType {
     id: string
     displayName: string
     selected: any
+    path?: string
 }
 
 interface OuTeiSearchResponseType {
