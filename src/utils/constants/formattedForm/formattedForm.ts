@@ -27,13 +27,13 @@ const staticForm = () => {
   }
 }
 
-function formFields(enrollmentsData: any[]): FormSectionProps[] {
-  const [transferForm] = enrollmentsData;
+function formFields(formattedFormFields: any[], sectionName: string): FormSectionProps[] {
+  const [transferForm] = formattedFormFields;
 
   return [
     {
-      section: "Transfer student",
-      description: "Select the school you want to transfer the student(s) to",
+      section: `Transfer ${sectionName}`,
+      description: `Select the school you want to transfer the ${sectionName} to`,
       fields: [
         ...transferForm
       ]

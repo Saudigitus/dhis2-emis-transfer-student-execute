@@ -19,9 +19,11 @@ interface performance {
 
 interface registration {
     academicYear: string
-    grade: string
     programStage: string
-    section: string
+    grade?: string
+    section?: string
+    position?: string
+    employmentType?: string
 }
 
 interface transfer {
@@ -29,10 +31,20 @@ interface transfer {
     originSchool: string
     programStage: string
     status: string
-    statusOptions: [{
-        code: string
-        key: string
-    }]
+}
+
+interface defaults {
+    currentAcademicYear: string
+}
+
+interface filterItem {
+    code: string
+    dataElement: string
+    order: number
+}
+
+interface filters {
+    dataElements: filterItem[]
 }
 
 interface dataStoreRecord {
@@ -40,14 +52,15 @@ interface dataStoreRecord {
     key: string
     trackedEntityType: string
     lastUpdate: string
-    performance: performance
+    performance?: performance
     program: string
     registration: registration
     ["socio-economics"]: simpleProgramStage
     transfer: transfer
     ["final-result"]: simpleProgramStage
-
+    defaults: defaults
+    filters: filters
 }
 
 
-export type { dataStoreRecord, transfer, registration, performance, attendance, simpleProgramStage}
+export type { dataStoreRecord, transfer, registration, performance, attendance, simpleProgramStage, filterItem}
