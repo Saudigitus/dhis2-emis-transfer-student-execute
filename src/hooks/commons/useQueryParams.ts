@@ -1,8 +1,7 @@
 import { useSearchParams } from 'react-router-dom'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { DataStoreState } from '../../schema/dataStoreSchema'
-import useGetGlobalParams from './useGetGlobalParams'
 
 const useParams = () => {
     const [searchParams, setSearchParams] = useSearchParams()
