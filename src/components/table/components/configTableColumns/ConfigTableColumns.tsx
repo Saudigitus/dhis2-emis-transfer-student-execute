@@ -9,7 +9,7 @@ import { RowSelectionState } from '../../../../schema/tableSelectedRowsSchema';
 import { ConfigTableColumnsProps } from '../../../../types/table/ConfigColumnsProps';
 
 function ConfigTableColumns(props: ConfigTableColumnsProps) {
-    const { headers, updateVariables } = props;
+    const { headers, updateVariables, filteredHeaders } = props;
     const [open, setopen] = useState<boolean>(false)
     const [selected] = useRecoilState(RowSelectionState);
 
@@ -44,6 +44,7 @@ function ConfigTableColumns(props: ConfigTableColumnsProps) {
                 onClose={closeDialog}
                 updateVariables={updateVariables}
                 headers={headers}
+                filteredHeaders={filteredHeaders}
             />
         </div>
     )

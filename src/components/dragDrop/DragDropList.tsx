@@ -17,9 +17,13 @@ function DragDropList(props: DragDropListProps) {
         <DndProvider backend={HTML5Backend}>
             <Table>
                 <TableHead>
-                    <TableRow>
-                        <TableCell colSpan={12}>{i18n.t('Column')}</TableCell>
-                    </TableRow>
+                    <DragDropListItem
+                        key={"all"}
+                        id={"all"}
+                        text={i18n.t('Column')}
+                        handleToggle={handleToggle}
+                        visible={listItems?.filter(x => x.visible == false)?.length == 0}
+                    />
                 </TableHead>
                 <TableBody>
                     {listItems?.map((item, i) =>
