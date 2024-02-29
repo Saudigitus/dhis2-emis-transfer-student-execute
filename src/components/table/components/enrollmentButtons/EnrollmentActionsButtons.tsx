@@ -6,12 +6,14 @@ import { useParams } from '../../../../hooks/commons/useQueryParams';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useRecoilState } from 'recoil';
 import { RowSelectionState } from '../../../../schema/tableSelectedRowsSchema';
+import useGetSectionTypeLabel from '../../../../hooks/commons/useGetSectionTypeLabel';
 
 function EnrollmentActionsButtons() {
   const [open, setOpen] = useState<boolean>(false);
   const { urlParamiters } = useParams();
   const { school: orgUnit } = urlParamiters();
   const [selected] = useRecoilState(RowSelectionState);
+  const { sectionName } = useGetSectionTypeLabel();
 
   return (
     <div>
@@ -23,7 +25,7 @@ function EnrollmentActionsButtons() {
         </Tooltip>
       </ButtonStrip>
 
-      {open && <ModalComponent title="Students Transfer" open={open} setOpen={setOpen}><ModalContentComponent setOpen={setOpen} /></ModalComponent>}
+      {open && <ModalComponent title={`${sectionName} Transfer`} open={open} setOpen={setOpen}><ModalContentComponent setOpen={setOpen} /></ModalComponent>}
     </div>
   )
 }

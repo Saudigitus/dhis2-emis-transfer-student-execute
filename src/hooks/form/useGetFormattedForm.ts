@@ -5,8 +5,8 @@ import { formatResponseEvents } from '../../utils/events/formatResponseEvents';
 import { getSelectedKey } from '../../utils/commons/dataStore/getSelectedKey';
 import { ProgramStageConfig } from '../../types/programStageConfig/ProgramStageConfig';
 
-export default function useGetEnrollmentForm() {
-    const [enrollmentsData, setEnrollmentsData] = useState<any[]>([])
+export default function useGetFormattedForm() {
+    const [formattedFormFields, setFormattedFormFields] = useState<any[]>([])
     const getProgram = useRecoilValue(ProgramConfigState);
     const { getDataStoreData } = getSelectedKey()
 
@@ -17,12 +17,12 @@ export default function useGetEnrollmentForm() {
 
             const transferProgramStage = programStages.find((elemnt: ProgramStageConfig) => elemnt.id === programStage) as unknown as ProgramStageConfig
             
-            setEnrollmentsData([formatResponseEvents(transferProgramStage).filter(x => x.id !== status && x.id !== originSchool)])
+            setFormattedFormFields([formatResponseEvents(transferProgramStage).filter(x => x.id !== status && x.id !== originSchool)])
         }
     }
     useEffect(() => {
         buildForm()
     }, [])
 
-    return { enrollmentsData }
+    return { formattedFormFields }
 }

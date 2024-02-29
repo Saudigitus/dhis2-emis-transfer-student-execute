@@ -3,34 +3,36 @@ import { ModalActions, Button, ButtonStrip, CircularLoader, CenteredContent, Not
 import WithPadding from "../template/WithPadding";
 import { Form } from "react-final-form";
 import { formFields } from "../../utils/constants/formattedForm/formattedForm";
-import useGetEnrollmentForm from "../../hooks/form/useGetEnrollmentForm";
+import { useGetFormattedForm } from "../../hooks";
 import GroupForm from "../form/GroupForm";
 import { useRecoilState } from "recoil";
 import { format } from "date-fns";
 import { onSubmitClicked } from "../../schema/formOnSubmitClicked";
 import { useCreateEvent } from "../../hooks/events/useCreateEvents";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
-import { getSelectedKey } from "../../utils/commons/dataStore/getSelectedKey";
 import { useParams } from "../../hooks/commons/useQueryParams";
 import { ModalContentProps } from "../../types/modal/ModalProps";
 import { organizeDataValues } from "../../utils/events/organizeDataValues";
+import useGetSectionTypeLabel from "../../hooks/commons/useGetSectionTypeLabel";
+import { getDataStoreKeys } from "../../utils/commons/dataStore/getDataStoreKeys";
 
 function ModalContentComponent({ setOpen }: ModalContentProps): React.ReactElement {
   const formRef: React.MutableRefObject<FormApi<IForm, Partial<IForm>>> = useRef(null);
-  const { enrollmentsData } = useGetEnrollmentForm();
+  const { formattedFormFields } = useGetFormattedForm();
   const [, setClicked] = useRecoilState<boolean>(onSubmitClicked);
   const [values, setValues] = useState<object>({})
-  const [fieldsWitValue, setFieldsWitValues] = useState<any[]>([enrollmentsData])
+  const [fieldsWitValue, setFieldsWitValues] = useState<any[]>([formattedFormFields])
   const [clickedButton, setClickedButton] = useState<string>("");
   const [selected] = useRecoilState(RowSelectionState);
   const { loadUpdateEvent, updateEvent, data } = useCreateEvent();
-  const { getDataStoreData } = getSelectedKey();
+  const { transfer } = getDataStoreKeys();
   const { urlParamiters } = useParams();
   const { school: orgUnit } = urlParamiters()
+  const { sectionName } = useGetSectionTypeLabel();
 
   const [initialValues] = useState<object>({
-    [getDataStoreData?.transfer?.originSchool]: orgUnit,
-    [getDataStoreData?.transfer?.status]: "Pending",
+    [transfer?.originSchool]: orgUnit,
+    [transfer?.status]: "Pending",
     eventdatestaticform: format(new Date(), "yyyy-MM-dd")
   })
 
@@ -57,7 +59,7 @@ function ModalContentComponent({ setOpen }: ModalContentProps): React.ReactEleme
           occurredAt: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"),
           orgUnit: event?.orgUnit,
           program: event?.program,
-          programStage: getDataStoreData?.transfer?.programStage,
+          programStage: transfer?.programStage,
           scheduledAt: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"),
           status: "ACTIVE",
           trackedEntityInstance: event?.trackedEntity,
@@ -73,7 +75,7 @@ function ModalContentComponent({ setOpen }: ModalContentProps): React.ReactEleme
     { id: "saveandcontinue", type: "submit", label: "Perform transfer", primary: true, disabled: loadUpdateEvent, onClick: () => { setClickedButton("saveandcontinue"); setClicked(true) } }
   ];
 
-  if (enrollmentsData?.length < 1) {
+  if (formattedFormFields?.length < 1) {
     return (
       <CenteredContent>
         <CircularLoader />
@@ -82,7 +84,7 @@ function ModalContentComponent({ setOpen }: ModalContentProps): React.ReactEleme
   }
 
   function onChange(e: any): void {
-    const sections = enrollmentsData;
+    const sections = formattedFormFields;
     for (const [key, value] of Object.entries(e)) {
       for (let i = 0; i < sections?.length; i++) {
         if (sections[i].find((element: any) => element.id === key) !== null && sections[i].find((element: any) => element.id === key) !== undefined) {
@@ -110,7 +112,7 @@ function ModalContentComponent({ setOpen }: ModalContentProps): React.ReactEleme
             onChange={onChange(values)}
           >
             {
-              formFields(enrollmentsData).map((field: any, index: number) => (
+              formFields(formattedFormFields, sectionName).map((field: any, index: number) => (
                 <GroupForm
                   name={field.section}
                   description={field.description}
