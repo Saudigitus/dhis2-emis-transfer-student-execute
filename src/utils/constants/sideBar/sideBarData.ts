@@ -4,9 +4,12 @@ import glyph from "../../../assets/images/sidebar/Glyph.svg"
 import listAdd from "../../../assets/images/sidebar/listAdd.svg"
 import logOut from "../../../assets/images/sidebar/log-out.svg"
 import userGroup from "../../../assets/images/sidebar/user-group.svg"
-import { SideBarItemProps } from "../../../types/sideBar/SideBarTypes"
+import { type SideBarItemProps } from "../../../types/sideBar/SideBarTypes"
+import { subItemRoute } from "./subItemRoute"
+import { filterItem } from "../../../types/dataStore/DataStoreConfig"
 
-function sideBarData(): SideBarItemProps[] {
+function sideBarData(locationParms : string, filterDataElements: filterItem[]): SideBarItemProps[] {
+
     return [
         {
             title: "Students",
@@ -14,46 +17,46 @@ function sideBarData(): SideBarItemProps[] {
                 {
                     icon: listAdd,
                     label: "Enrollment",
-                    showBadge: true,
+                    showBadge: false,
                     disabled: false,
                     appName: "SEMIS-Enrollment",
-                    route: "enrollment?sectionType=student&academicYear=2023",
+                    route: `enrollment?${subItemRoute(locationParms.slice(1), 'student', filterDataElements)}`, 
                     pathName: "/enrollment"
                 },
                 {
                     icon: glyph,
                     label: "Attendance",
-                    showBadge: true,
+                    showBadge: false,
                     disabled: false,
                     appName: "SEMIS-Attendance",
-                    route: "attendance?sectionType=student&academicYear=2023",
+                    route: `attendance?${subItemRoute(locationParms.slice(1), 'student', filterDataElements)}`, 
                     pathName: "/attendance"
                 },
                 {
                     icon: fileDocument,
                     label: "Performance",
-                    showBadge: true,
+                    showBadge: false,
                     disabled: false,
                     appName: "SEMIS-Performance",
-                    route: "performance?sectionType=student&academicYear=2023",
+                    route: `performance?${subItemRoute(locationParms.slice(1), 'student', filterDataElements)}`, 
                     pathName: "/performance"
                 },
                 {
                     icon: gauge,
                     label: "Final result",
-                    showBadge: true,
+                    showBadge: false,
                     disabled: false,
                     appName: "SEMIS-Final-Result",
-                    route: "final-result?sectionType=student&academicYear=2023",
+                    route: `final-result?${subItemRoute(locationParms.slice(1), 'student', filterDataElements)}`, 
                     pathName: "/final-result"
                 },
                 {
                     icon: logOut,
                     label: "Transfer",
-                    showBadge: true,
+                    showBadge: false,
                     disabled: false,
                     appName: "SEMIS-Student-Transfer",
-                    route: "student-transfer?sectionType=student",
+                    route: `student-transfer?${subItemRoute(locationParms.slice(1), 'student', filterDataElements, true)}`, 
                     pathName: "/student-transfer"
                 }
             ]
@@ -64,28 +67,28 @@ function sideBarData(): SideBarItemProps[] {
                 {
                     icon: userGroup,
                     label: "Staff registry",
-                    showBadge: true,
+                    showBadge: false,
                     disabled: false,
                     appName: "SEMIS-Enrollment-Staff",
-                    route: "enrollment-teacher?sectionType=staff&academicYear=2023",
+                    route:`enrollment-teacher?${subItemRoute(locationParms.slice(1), 'staff', filterDataElements)}`, 
                     pathName: "/enrollment-teacher"
                 },
                 {
                     icon: glyph,
                     label: "Attendance",
-                    showBadge: true,
+                    showBadge: false,
                     disabled: false,
                     appName: "SEMIS-Attendance-Staff",
-                    route: "staff-attendance?sectionType=staff&academicYear=2023",
+                    route: `staff-attendance?${subItemRoute(locationParms.slice(1), 'staff', filterDataElements)}`, 
                     pathName: "/staff-attendance"
                 },
                 {
                     icon: logOut,
                     label: "Transfer",
-                    showBadge: true,
+                    showBadge: false,
                     disabled: false,
                     appName: "SEMIS-Staff-Transfer",
-                    route: "staff-transfer?sectionType=staff",
+                    route: `staff-transfer?${subItemRoute(locationParms.slice(1), 'staff', filterDataElements, true)}`, 
                     pathName: "/staff-transfer"
                 }
             ]
