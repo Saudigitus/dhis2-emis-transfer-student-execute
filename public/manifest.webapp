@@ -1,8 +1,8 @@
 {
   "appType": "APP",
-  "short_name": "SEMIS-Student-Transfer-Execute",
-  "name": "SEMIS-Student-Transfer-Execute",
-  "description": "SEMIS-Student-Transfer-Execute",
+  "short_name": "SEMIS-Transfer-Execute",
+  "name": "SEMIS-Transfer-Execute",
+  "description": "SEMIS-Transfer-Execute",
   "version": "1.0.0",
   "launch_path": "index.html",
   "default_locale": "en",
