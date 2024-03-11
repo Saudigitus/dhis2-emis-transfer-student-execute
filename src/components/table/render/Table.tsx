@@ -25,7 +25,6 @@ function Table() {
     const classes = usetStyles()
     const { columns } = useHeader()
     const { getData, loading, tableData } = useTableData()
-    const { useQuery } = useParams()
     const headerFieldsState = useRecoilValue(HeaderFieldsState)
     const [page, setpage] = useState<number>(1)
     const [pageSize, setpageSize] = useState<number>(10)
@@ -33,7 +32,7 @@ function Table() {
 
     useEffect(() => {
         void getData(page, pageSize)
-    }, [useQuery(), headerFieldsState, page, pageSize, refetch])
+    }, [headerFieldsState, page, pageSize, refetch])
 
     const onPageChange = (newPage: number) => {
         setpage(newPage)
