@@ -1,10 +1,9 @@
 import React from 'react'
 import { MenuItem, Help } from "@dhis2/ui"
-import { MenuItemsProps } from '../../types/menu/MenuItemTypes'
-import { useParams } from '../../hooks/commons/useQueryParams';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { HeaderFieldsState } from '../../schema/headersSchema';
-import useDataElementsParamMapping from '../../hooks/dataElements/useDataElementsParamMapping';
+import { MenuItemsProps } from '../../types/menu/MenuItemTypes';
+import { useDataElementsParamMapping, useParams } from '../../hooks';
 import { OuQueryString } from '../../schema/headerSearchInputSchema';
 
 export default function Item(props: MenuItemsProps): React.ReactElement {
@@ -20,7 +19,7 @@ export default function Item(props: MenuItemsProps): React.ReactElement {
     const paramsMapping = useDataElementsParamMapping()
 
     const onChange = (selectedOption: { label: string, value: string }) => {
-        add(paramsMapping[dataElementId], selectedOption.value);
+        add(paramsMapping[dataElementId as unknown as keyof typeof paramsMapping], selectedOption.value);
         let dataElements: string[][] = [...headerFields.dataElements]
         const attributes: string[][] = [...headerFields.attributes]
 
