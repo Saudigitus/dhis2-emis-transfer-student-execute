@@ -1,5 +1,4 @@
 import { useSearchParams } from 'react-router-dom'
-import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { DataStoreState } from '../../schema/dataStoreSchema'
 
@@ -15,7 +14,7 @@ const useParams = () => {
         setSearchParams(searchParams)
     }
     const useQuery = () => {
-        return React.useMemo(() => new URLSearchParams(searchParams), [searchParams])
+        return new URLSearchParams(searchParams)
     }
     const filterItemsParams: Record<string, any> = {};
 
