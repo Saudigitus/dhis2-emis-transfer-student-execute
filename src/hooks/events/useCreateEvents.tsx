@@ -1,8 +1,9 @@
 import { useRecoilState } from 'recoil';
 import useShowAlerts from '../commons/useShowAlert';
-import { useDataMutation } from "@dhis2/app-runtime";
+import { useConfig, useDataMutation } from "@dhis2/app-runtime";
 import { RowSelectionState } from '../../schema/tableSelectedRowsSchema';
 import { TeiRefetch } from '../../schema/refecthTeiSchema';
+import { useParams } from '../commons/useQueryParams';
 
 const POST_EVENT: any = {
     resource: 'tracker',
@@ -17,6 +18,9 @@ export function useCreateEvent() {
     const { hide, show } = useShowAlerts()
     const [refetch, setRefetch] = useRecoilState(TeiRefetch)
     const [, setSelected] = useRecoilState(RowSelectionState);
+    const { baseUrl } = useConfig();
+    const { urlParamiters } = useParams()
+    const { sectionType, school, schoolName } = urlParamiters()
 
     const [create, { loading, data }] = useDataMutation(POST_EVENT, {
         onComplete: () => {
@@ -27,6 +31,7 @@ export function useCreateEvent() {
                 selectedRows: [],
                 rows: []
             })
+            window.open(`${baseUrl}/api/apps/SEMIS-Transfer/index.html#/transfer?sectionType=${sectionType}&school=${school}&schoolName=${schoolName}`, "_self")
         },
         onError: (error) => {
             show({
