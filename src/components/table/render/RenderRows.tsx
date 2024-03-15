@@ -10,6 +10,11 @@ import { useRecoilState } from 'recoil';
 import { checkIsRowSelected } from '../../../utils/commons/checkIsRowSelected';
 import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
 import { RenderHeaderProps } from '../../../types/table/TableContentProps';
+import { useGetImageUrl } from '../../../hooks/fileResources/useGetImageUrl';
+import { formatKeyValueTypeHeader } from '../../../utils/programRules/formatKeyValueType';
+import { Attribute } from '../../../types/generated/models';
+import { IconButton } from '@material-ui/core';
+import { CropOriginal } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -37,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function RenderRows({ headerData, rowsData }: RenderHeaderProps): React.ReactElement {
     const classes = useStyles()
+    const { imageUrl } = useGetImageUrl()
     const { baseUrl } = useConfig()
     const [selected, setSelected] = useRecoilState(RowSelectionState);
 
@@ -92,7 +98,18 @@ function RenderRows({ headerData, rowsData }: RenderHeaderProps): React.ReactEle
                                     className={classNames(classes.cell, classes.bodyCell)}
                                 >
                                     <div>
-                                        {getDisplayName({ attribute: column.id, headers: headerData, value: row[column.id] }) || "---"}
+                                        {
+                                            formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
+                                                <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity })} target='_blank'>
+                                                    {row[column.id] && 
+                                                        <IconButton> 
+                                                            <CropOriginal />
+                                                        </IconButton>
+                                                    }
+                                                </a>
+                                                :
+                                                getDisplayName({ attribute: column.id, headers: headerData, value: row[column.id] }) || "---"
+                                        }
                                     </div>
                                 </RowCell>
                             ))
