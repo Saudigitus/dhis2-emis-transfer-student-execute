@@ -57,7 +57,6 @@ export function useTableData() {
                 programStage: getDataStoreData?.registration?.programStage as unknown as string,
                 filter: headerFieldsState?.dataElements,
                 filterAttributes: headerFieldsState?.attributes,
-                programStatus: "ACTIVE",
                 orgUnit: school
             })).catch((error) => {
                 show({

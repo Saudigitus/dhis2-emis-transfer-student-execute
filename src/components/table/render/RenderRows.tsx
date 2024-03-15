@@ -42,9 +42,9 @@ function RenderRows({ headerData, rowsData }: RenderHeaderProps): React.ReactEle
 
     const openTeiInCaptureApp = (event: any) => {
         const { trackedEntity, enrollment, orgUnit, program } = event;
-        console.log(event, "ds");
         window.open(`${baseUrl}/dhis-web-capture/index.html#/enrollment?enrollmentId=${enrollment}&orgUnitId=${orgUnit}&programId=${program}&teiId=${trackedEntity}`, '_blank')
     }
+    
     const onToggle = (rawRowData: object) => {
         setSelected({ ...selected, selectedRows: checkIsRowSelected(rawRowData, selected), isAllRowsSelected: selected.rows.length === checkIsRowSelected(rawRowData, selected).length })
     }
@@ -70,7 +70,7 @@ function RenderRows({ headerData, rowsData }: RenderHeaderProps): React.ReactEle
                 rowsData?.map((row, index) => (
                     <RowTable
                         key={index}
-                        onClick={() => { openTeiInCaptureApp(selected.rows[index]); }}
+                        //onClick={() => { openTeiInCaptureApp(selected.rows[index]); }}
                         className={classNames(classes.row, classes.dataRow)}
                     >
                         <RowCell
@@ -78,7 +78,7 @@ function RenderRows({ headerData, rowsData }: RenderHeaderProps): React.ReactEle
                         >
                             <div onClick={(event) => { event.stopPropagation(); }}>
                                 <Checkbox
-                                    checked={selected.isAllRowsSelected || selected.selectedRows.filter(element => element.trackedEntity === row.trackedEntity).length > 0}
+                                    checked={selected.isAllRowsSelected || selected.selectedRows.filter(element => element.event === row.event).length > 0}
                                     name="Ex"
                                     onChange={() => { onToggle(selected.rows[index]); }}
                                     value="checked"

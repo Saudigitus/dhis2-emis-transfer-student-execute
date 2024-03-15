@@ -9,7 +9,6 @@ interface EventQueryProps {
     ouMode: string
     program: string
     order: string
-    programStatus: string
     programStage: string
     orgUnit: string
     filter?: string[]
@@ -29,6 +28,7 @@ interface dataValuesProps {
 interface EventQueryResults {
     results: {
         instances: [{
+            event: string
             trackedEntity: string
             dataValues: dataValuesProps[]
         }]

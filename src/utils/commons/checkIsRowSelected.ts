@@ -2,7 +2,7 @@ import { RowsSelectionType } from "../../types/rows/SelectedRowsTypes";
 
 export const checkIsRowSelected = (rawRowData: any, selected: RowsSelectionType) => {
     const newArray = [...selected.selectedRows];
-    const existingIndex = newArray.findIndex(item => item.trackedEntity === rawRowData.trackedEntity);
+    const existingIndex = newArray.findIndex(item => item.event === rawRowData.event);
 
     if (existingIndex !== -1) {
         newArray.splice(existingIndex, 1); // Remover o objeto existente

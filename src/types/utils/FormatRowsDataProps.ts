@@ -4,6 +4,7 @@ import { CustomAttributeProps } from "../variables/AttributeColumns"
 
 interface FormatResponseRowsProps {
     eventsInstances: {
+        event: string
         trackedEntity: string
         dataValues: dataValuesProps[]
     }[]
