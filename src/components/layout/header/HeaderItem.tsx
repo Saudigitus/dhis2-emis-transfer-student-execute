@@ -10,10 +10,12 @@ import { useRecoilState } from 'recoil'
 import { OuQueryString } from '../../../schema/headerSearchInputSchema'
 import { useDataElementsParamMapping, useParams } from '../../../hooks'
 import HeaderResetItemValue from './HeaderResetItemValue'
+import { getDataStoreKeys } from '../../../utils/commons/dataStore/getDataStoreKeys'
 
 export default function HeaderItem(props: HeadBarTypes): React.ReactElement {
     const { label, value, placeholder, component, dataElementId, id, selected } = props;
     const { remove } = useParams()
+    const { registration } = getDataStoreKeys()
     const Component = (component != null) ? componentMapping[component] : null;
     const [openDropDown, setOpenDropDown] = useState<boolean>(false);
     const [, setStringQuery] = useRecoilState(OuQueryString);
@@ -49,7 +51,7 @@ export default function HeaderItem(props: HeadBarTypes): React.ReactElement {
             }
         >
             <h5>{label} <span>{value}</span></h5>
-            {selected && <HeaderResetItemValue onReset={onReset}/> }
+            {(selected && dataElementId !== registration?.academicYear) ? <HeaderResetItemValue onReset={onReset} /> : null}
             <img src={info} />
         </DropdownButton >
     )
