@@ -3,6 +3,8 @@ import { Button } from '@dhis2/ui';
 import { makeStyles, createStyles, type Theme } from '@material-ui/core/styles';
 import FilterComponents from '../../fields/FilterComponents';
 import { SelectorContentsProps } from '../../../../../../types/table/ContentFiltersProps';
+import { useRecoilValue } from 'recoil';
+import { TableDataLoadingState } from '../../../../../../schema/tableDataLoadingSchema';
 
 const getStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -17,8 +19,8 @@ const getStyles = makeStyles((theme: Theme) =>
 );
 
 function SelectorContents(props: SelectorContentsProps) {
-    const { onClose, disabledReset, colum, onQuerySubmit, disabled: disabledUpdate, value } = props;
-
+    const { onClose, disabledReset, colum, onQuerySubmit, disabled: disabledUpdate, value, filled } = props;
+    const loading = useRecoilValue(TableDataLoadingState)
     const classes = getStyles()
 
     return (
@@ -34,7 +36,7 @@ function SelectorContents(props: SelectorContentsProps) {
                     <Button
                         primary
                         onClick={onQuerySubmit}
-                        disabled={disabledUpdate || !value?.replace(/\s/g, '').length}
+                        disabled={disabledUpdate || !value?.replace(/\s/g, '').length || loading}
                     >
                         {('Update')}
                     </Button>
@@ -44,8 +46,7 @@ function SelectorContents(props: SelectorContentsProps) {
                         dataTest="list-view-filter-cancel-button"
                         secondary
                         onClick={onClose}
-                        disabled={disabledReset}
-
+                        disabled={disabledReset || !filled || loading}
                     >
                         {('Restore')}
                     </Button>
