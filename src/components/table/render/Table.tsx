@@ -11,9 +11,10 @@ import WorkingLists from '../components/filters/workingList/WorkingLists';
 import { useHeader } from '../../../hooks/tableHeader/useHeader';
 import { useTableData } from '../../../hooks/tableData/useTableData';
 import { useParams } from '../../../hooks/commons/useQueryParams';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { HeaderFieldsState } from '../../../schema/headersSchema';
 import { TeiRefetch } from '../../../schema/refecthTeiSchema';
+import { TableDataLoadingState } from '../../../schema/tableDataLoadingSchema';
 
 const usetStyles = makeStyles({
     tableContainer: {
@@ -29,10 +30,16 @@ function Table() {
     const [page, setpage] = useState<number>(1)
     const [pageSize, setpageSize] = useState<number>(10)
     const [refetch] = useRecoilState(TeiRefetch)
+    const setLoading = useSetRecoilState(TableDataLoadingState)
 
     useEffect(() => {
         void getData(page, pageSize)
     }, [headerFieldsState, page, pageSize, refetch])
+
+    useEffect(() => {
+        setLoading(loading)
+    }, [loading])
+
 
     const onPageChange = (newPage: number) => {
         setpage(newPage)
@@ -45,10 +52,11 @@ function Table() {
 
     return (
         <Paper>
-            {loading &&
+            {loading ?
                 <CenteredContent>
                     <CircularLoader />
                 </CenteredContent>
+                : null
             }
             <WorkingLists />
             <WithBorder type='bottom' />
