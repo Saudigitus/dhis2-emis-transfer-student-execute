@@ -1,6 +1,6 @@
 import { attributesProps } from "../api/WithRegistrationProps"
 import { dataValuesProps } from "../api/WithoutRegistrationProps"
-import { CustomAttributeProps } from "../variables/AttributeColumns"
+import { ProgramConfig } from "../programConfig/ProgramConfig"
 
 interface FormatResponseRowsProps {
     eventsInstances: {
@@ -22,8 +22,8 @@ interface FormatResponseRowsProps {
 type RowsDataProps = Record<string, string | number | boolean | any>;
 
 interface defaultProps {
-    attribute: string
+    metaData: string
+    program: ProgramConfig
     value: string
-    headers: CustomAttributeProps[]
 }
 export type { FormatResponseRowsProps, RowsDataProps, defaultProps }
