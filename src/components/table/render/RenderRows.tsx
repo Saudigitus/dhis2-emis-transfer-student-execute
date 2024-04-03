@@ -4,9 +4,8 @@ import classNames from 'classnames';
 import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
 import { RowCell, RowTable } from '../components';
 import { getDisplayName } from '../../../utils/table/rows/getDisplayNameByOption';
-import { useConfig } from '@dhis2/app-runtime';
 import { Checkbox } from "@dhis2/ui"
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { checkIsRowSelected } from '../../../utils/commons/checkIsRowSelected';
 import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
 import { RenderHeaderProps } from '../../../types/table/TableContentProps';
@@ -15,6 +14,7 @@ import { formatKeyValueTypeHeader } from '../../../utils/programRules/formatKeyV
 import { Attribute } from '../../../types/generated/models';
 import { IconButton } from '@material-ui/core';
 import { CropOriginal } from '@material-ui/icons';
+import { ProgramConfigState } from '../../../schema/programSchema';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -43,14 +43,9 @@ const useStyles = makeStyles((theme: Theme) =>
 function RenderRows({ headerData, rowsData }: RenderHeaderProps): React.ReactElement {
     const classes = useStyles()
     const { imageUrl } = useGetImageUrl()
-    const { baseUrl } = useConfig()
+    const programConfigState = useRecoilValue(ProgramConfigState);
     const [selected, setSelected] = useRecoilState(RowSelectionState);
 
-    const openTeiInCaptureApp = (event: any) => {
-        const { trackedEntity, enrollment, orgUnit, program } = event;
-        window.open(`${baseUrl}/dhis-web-capture/index.html#/enrollment?enrollmentId=${enrollment}&orgUnitId=${orgUnit}&programId=${program}&teiId=${trackedEntity}`, '_blank')
-    }
-    
     const onToggle = (rawRowData: object) => {
         setSelected({ ...selected, selectedRows: checkIsRowSelected(rawRowData, selected), isAllRowsSelected: selected.rows.length === checkIsRowSelected(rawRowData, selected).length })
     }
@@ -76,7 +71,6 @@ function RenderRows({ headerData, rowsData }: RenderHeaderProps): React.ReactEle
                 rowsData?.map((row, index) => (
                     <RowTable
                         key={index}
-                        //onClick={() => { openTeiInCaptureApp(selected.rows[index]); }}
                         className={classNames(classes.row, classes.dataRow)}
                     >
                         <RowCell
@@ -108,7 +102,7 @@ function RenderRows({ headerData, rowsData }: RenderHeaderProps): React.ReactEle
                                                     }
                                                 </a>
                                                 :
-                                                getDisplayName({ attribute: column.id, headers: headerData, value: row[column.id] }) || "---"
+                                                getDisplayName({ metaData: column.id, value: row[column.id], program: programConfigState }) || "---"
                                         }
                                     </div>
                                 </RowCell>
