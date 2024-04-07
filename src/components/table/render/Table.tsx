@@ -10,7 +10,6 @@ import WithPadding from '../../template/WithPadding';
 import WorkingLists from '../components/filters/workingList/WorkingLists';
 import { useHeader } from '../../../hooks/tableHeader/useHeader';
 import { useTableData } from '../../../hooks/tableData/useTableData';
-import { useParams } from '../../../hooks/commons/useQueryParams';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { HeaderFieldsState } from '../../../schema/headersSchema';
 import { TeiRefetch } from '../../../schema/refecthTeiSchema';
