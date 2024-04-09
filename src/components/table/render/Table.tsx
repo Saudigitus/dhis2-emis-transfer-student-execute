@@ -10,7 +10,6 @@ import WithPadding from '../../template/WithPadding';
 import WorkingLists from '../components/filters/workingList/WorkingLists';
 import { useHeader } from '../../../hooks/tableHeader/useHeader';
 import { useTableData } from '../../../hooks/tableData/useTableData';
-import { useParams } from '../../../hooks/commons/useQueryParams';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { HeaderFieldsState } from '../../../schema/headersSchema';
 import { TeiRefetch } from '../../../schema/refecthTeiSchema';
@@ -19,6 +18,17 @@ import { TableDataLoadingState } from '../../../schema/tableDataLoadingSchema';
 const usetStyles = makeStyles({
     tableContainer: {
         overflowX: 'auto'
+    },
+    workingListsContainer: {
+        display: 'flex',
+        marginLeft: '0.5rem',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    h4: {
+        margin: '0px',
+        fontSize:'22px',
+        fontWeigth:'500',
     }
 });
 
@@ -58,7 +68,10 @@ function Table() {
                 </CenteredContent>
                 : null
             }
-            <WorkingLists />
+            <div className={classes.workingListsContainer}>
+                <h4 className={classes.h4}>Transfers</h4>
+                <WorkingLists />
+            </div>
             <WithBorder type='bottom' />
             <WithPadding >
                 <WithBorder type='all' >
