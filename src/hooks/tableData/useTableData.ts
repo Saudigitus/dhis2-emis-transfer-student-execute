@@ -11,6 +11,7 @@ import { getSelectedKey } from "../../utils/commons/dataStore/getSelectedKey";
 import { EventQueryProps, EventQueryResults } from "../../types/api/WithoutRegistrationProps";
 import { TeiQueryProps, TeiQueryResults } from "../../types/api/WithRegistrationProps";
 import { TableDataProps } from "../../types/table/TableContentProps";
+import { mergeArrayObjects } from "../../utils/commons/mergeArrayObjects";
 
 const EVENT_QUERY = (queryProps: EventQueryProps) => ({
     results: {
@@ -83,14 +84,16 @@ export function useTableData() {
                     setTimeout(hide, 5000);
                 }) as unknown as TeiQueryResults
                 : { results: { instances: [] } } as unknown as TeiQueryResults
-            setSelected({ ...selected, rows: eventsResults?.results?.instances })
-            setTableData(formatResponseRows({
-                eventsInstances: eventsResults?.results?.instances,
-                teiInstances: teiResults?.results?.instances
-            }));
+                
+                setSelected({ ...selected, rows: mergeArrayObjects({array: [...selected.rows, ...eventsResults?.results?.instances], key: "event"})});
+                setTableData(formatResponseRows({
+                    eventsInstances: eventsResults?.results?.instances,
+                    teiInstances: teiResults?.results?.instances
+                }));
 
             setLoading(false)
         }
+
     }
 
     return {

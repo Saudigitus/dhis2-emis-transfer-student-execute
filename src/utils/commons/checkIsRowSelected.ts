@@ -1,7 +1,9 @@
 import { RowsSelectionType } from "../../types/rows/SelectedRowsTypes";
 
 export const checkIsRowSelected = (rawRowData: any, selected: RowsSelectionType) => {
+
     const newArray = [...selected.selectedRows];
+    console.log("checkSelected: ", newArray)
     const existingIndex = newArray.findIndex(item => item.event === rawRowData.event);
 
     if (existingIndex !== -1) {
