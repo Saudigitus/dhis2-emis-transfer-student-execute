@@ -25,7 +25,7 @@ export function useCreateEvent() {
     const [create, { loading, data }] = useDataMutation(POST_EVENT, {
         onComplete: () => {
             show({ message: "Transfer executed successfully!", type: { success: true } })
-            setRefetch(!refetch)
+            //setRefetch(!refetch)
             setSelected({
                 isAllRowsSelected: false,
                 selectedRows: [],
