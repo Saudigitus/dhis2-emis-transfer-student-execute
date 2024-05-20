@@ -27,8 +27,8 @@ const usetStyles = makeStyles({
     },
     h4: {
         margin: '0px',
-        fontSize:'22px',
-        fontWeigth:'500',
+        fontSize: '22px',
+        fontWeigth: '500',
     }
 });
 
@@ -62,12 +62,6 @@ function Table() {
 
     return (
         <Paper>
-            {loading ?
-                <CenteredContent>
-                    <CircularLoader />
-                </CenteredContent>
-                : null
-            }
             <div className={classes.workingListsContainer}>
                 <h4 className={classes.h4}>Transfers</h4>
                 <WorkingLists />
@@ -79,20 +73,26 @@ function Table() {
                     <div
                         className={classes.tableContainer}
                     >
-                        <TableComponent>
-                            <>
-                                <RenderHeader
-                                    createSortHandler={() => { }}
-                                    order='asc'
-                                    orderBy='desc'
-                                    rowsHeader={columns}
-                                />
-                                <RenderRows
-                                    headerData={columns}
-                                    rowsData={tableData}
-                                />
-                            </>
-                        </TableComponent>
+                        {loading ?
+                            <CenteredContent>
+                                <CircularLoader />
+                            </CenteredContent>
+                            :
+                            <TableComponent>
+                                <>
+                                    <RenderHeader
+                                        createSortHandler={() => { }}
+                                        order='asc'
+                                        orderBy='desc'
+                                        rowsHeader={columns}
+                                    />
+                                    <RenderRows
+                                        headerData={columns}
+                                        rowsData={tableData}
+                                    />
+                                </>
+                            </TableComponent>
+                        }
                     </div>
                     <Pagination
                         loading={loading}
